@@ -70,7 +70,9 @@ get_deps<-function(filename, #name of DESCRIPTION file
 
 	packages<-unique(unlist(packages))
 	packages<-packages[!grepl("R\\(.*\\)", packages)]
-	return(packages)
+	
+	if(is.null(packages)) stop("error reading DESCRIPTION filename, check that the file content is a valid DESCRIPTION file")
+	else return(packages)
 
 }
 
