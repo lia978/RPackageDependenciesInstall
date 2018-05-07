@@ -1,30 +1,43 @@
 #' Install R package dependencies from DESCRIPTION file
 #' @param filename path to DESCRIPTION file.
+#' @param url specified if filename is an url: must be raw content, if from github, must be specified as raw.githubusercontent.com/PATH
 #' @param verbose optional text output of installation status.
 #' @export
-fast_install<-function(filename, verbose=TRUE){
-	packages<-get_deps(filename)
-	packages.status<-lapply(packages,fast_install_package)
+fast_install<-function(filename, 
+	url = TRUE, 
+	verbose=TRUE){
+	packages<-get_deps(filename, url = url)
+	packages.status<-lapply(packages,fast_install_single_package)
 	names(packages.status)<-packages
 	status<-table(unlist(packages.status))
 	status.names<-names(status)
 	status.values<-lapply(status.names, function(i){
 		paste(packages[which(packages.status %in% i)], collapse = ", ")
 		})
-	msg<-paste0(status, " packages with status \'", status.names, "\': ", status.values)
+	msg<-paste(paste0(status, 
+		" packages with status \'", 
+		status.names, 
+		"\': ", 
+		status.values),
+		collapse = "\n")
 	VERBOSE(verbose, msg)
-	return(packages.status)
+	VERBOSE(verbose, "\n")
 }
 
 #' Get list of package dependencies from DESCRIPTION file
 #' @param filename path to DESCRIPTION file.
+#' @param url specified if filename is an url.
 #' @export
-get_deps<-function(filename #name of DESCRIPTION file
+get_deps<-function(filename, #name of DESCRIPTION file
+	url = TRUE
 	){
 
 	#read in DESCRIPTION file
-	str<-scan(filename, what="character", sep="\n", quiet = T)
-
+	if(!url)
+		str<-scan(filename, what="character", sep="\n", quiet = T)
+	else 
+		str<-suppressWarnings(scan(url(filename), what="character", sep="\n", quiet = T))
+	
 	##combine lines if is continuation of previous file (indicated by lack of seperator)
 	str2<-c()
 	for(i in 1:length(str)){
@@ -67,7 +80,7 @@ get_deps<-function(filename #name of DESCRIPTION file
 #' @param ind index for CRAN mirror selection
 #' @param ... optional parameters for install.packages()
 #' @export
-fast_install_package <- function(pkg, #package name
+fast_install_single_package <- function(pkg, #package name
 	verbose = FALSE,
 	ind = 57, #index for mirror selection
 	... ){
@@ -84,7 +97,6 @@ fast_install_package <- function(pkg, #package name
 		biocLite(pkg)
 
 		if(require(pkg, character.only = TRUE)){
-			VERBOSE(verbose, paste0("installing ",pkg, " through bioconductor"))
 			return("successfully installed through bioconductor")
 		} else {
 			#attempt to install through CRAN
@@ -92,8 +104,9 @@ fast_install_package <- function(pkg, #package name
 			VERBOSE(verbose, paste0("attempting to install ",pkg, " through CRAN"))
 			
 			install.packages(pkg, graphics = FALSE, ...)
+
 			if(require(pkg, character.only = TRUE)){
-				VERBOSE(verbose, paste0("successfull installed ",pkg, " through CRAN"))
+				VERBOSE(verbose, paste0("successfully installed ",pkg, " through CRAN"))
 				return("installed through CRAN")
 			} 
 		}
@@ -102,5 +115,9 @@ fast_install_package <- function(pkg, #package name
 } 
 
 
+VERBOSE <- function( v, ... )
+{
+  if ( v ) cat( ... )
+}
 
 

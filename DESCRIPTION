@@ -5,7 +5,7 @@ Version: 1.0
 Date: 2018-05-07
 Author: Amy Li
 Maintainer: Amy Li <lia978@gmail.com>
-Description: Fast installation of R package dependencies from DESCRIPTION file (supports bioconductor packages)
+Description: Fast installation of R package dependencies from DESCRIPTION file (supports CRAN and Bioconductor packages)
 URL: https://github.com/lia978/fastRPackageInstall
 biocViews:
 Depends:

@@ -1,3 +1,3 @@
-# fast_install_Rtools 
+# fastRPackageInstall
 
-Fast installation of R package dependencies
+Fast installation of R package dependencies (supports CRAN and Bioconductor packages)
