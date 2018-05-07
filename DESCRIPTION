@@ -1,0 +1,15 @@
+Package: fastRPackageInstall
+Type: Package
+Title: fastRPackageInstall - Fast installation of R package dependencies from DESCRIPTION file
+Version: 1.0
+Date: 2018-05-07
+Author: Amy Li
+Maintainer: Amy Li <lia978@gmail.com>
+Description: Fast installation of R package dependencies from DESCRIPTION file (supports bioconductor packages)
+URL: https://github.com/lia978/fastRPackageInstall
+biocViews:
+Depends:
+    R (>= 2.11.0)
+License: MIT + file LICENSE
+LazyData: true
+RoxygenNote: 6.0.1
