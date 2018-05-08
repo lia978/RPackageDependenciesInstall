@@ -1,12 +1,12 @@
-Package: fastRPackageInstall
+Package: RPackageDependenciesInstall
 Type: Package
-Title: fastRPackageInstall - Fast installation of R package dependencies from DESCRIPTION file
+Title: RPackageDependenciesInstall - Fast installation of R package dependencies from DESCRIPTION file
 Version: 1.0
 Date: 2018-05-07
 Author: Amy Li
 Maintainer: Amy Li <lia978@gmail.com>
 Description: Fast installation of R package dependencies from DESCRIPTION file (supports CRAN and Bioconductor packages)
-URL: https://github.com/lia978/fastRPackageInstall
+URL: https://github.com/lia978/RPackageDependenciesInstall
 biocViews:
 Depends:
     R (>= 2.11.0)
