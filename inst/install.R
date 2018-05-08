@@ -8,7 +8,7 @@ require(devtools)
 require(pkgdown)
 
 #set path to package home directory
-package.dir <- normalizePath("../../fastRPackageInstall")
+package.dir <- normalizePath("../../RPackageDependenciesInstall")
 
 cat("Documenting...\n")
 document(package.dir) # creates help pages
